@@ -1,0 +1,48 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>User Application</title>
+
+        <style>
+            html,body{
+                margin: 0;
+                padding: 0;
+                font-size: 14px;
+                font-family: sans-serif;
+                color: #111;
+                background-color: #eee;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+    </head>
+    <body>
+	
+	 <input type="text" size="50" id="message" placeholder="Message">
+	 <button onclick="sendData()">Send</button></br></br>
+        <div id="app"></div>
+
+        <script>
+			var instance;
+            
+			document.addEventListener('DOMContentLoaded', function(){
+                var elem = document.getElementById('app');
+                instance = new Kulfi("APIKEY","APPNAME","APIURLHERE");
+                instance.init()				
+				instance.listen("CHANNELNAME", function(observable, eventType, data){
+					console.log("Data Received", data);
+					document.getElementById("app").innerHTML = data;
+				});
+               
+            });
+			
+			function sendData(){
+				instance.push("CHANNELNAME",document.getElementById("message").value);
+			}
+        </script>
+    </body>
+</html>
